@@ -1,0 +1,20 @@
+{
+  "name": "@unkora/types",
+  "version": "1.0.0",
+  "private": true,
+  "main": "./index.ts",
+  "types": "./index.ts",
+  "exports": {
+    ".": "./index.ts"
+  },
+  "scripts": {
+    "typecheck": "tsc --noEmit",
+    "lint": "eslint . --ext .ts",
+    "clean": "rimraf dist"
+  },
+  "devDependencies": {
+    "@unkora/config": "workspace:*",
+    "rimraf": "^5.0.7",
+    "typescript": "^5.5.2"
+  }
+}

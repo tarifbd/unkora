@@ -1,0 +1,52 @@
+{
+    "name":  "unkora",
+    "version":  "1.0.0",
+    "private":  true,
+    "description":  "Unkora Ã¢â‚¬â€ Premium Multi-Category E-Commerce Platform for Bangladesh",
+    "engines":  {
+                    "node":  "\u003e=20",
+                    "pnpm":  "\u003e=9"
+                },
+    "scripts":  {
+                    "dev":  "turbo dev --concurrency 20",
+                    "build":  "turbo build",
+                    "start":  "turbo start",
+                    "lint":  "turbo lint",
+                    "lint:fix":  "turbo lint:fix",
+                    "typecheck":  "turbo typecheck",
+                    "test":  "turbo test",
+                    "test:e2e":  "turbo test:e2e",
+                    "clean":  "turbo clean \u0026\u0026 rimraf node_modules",
+                    "db:generate":  "turbo db:generate",
+                    "db:push":  "turbo db:push",
+                    "db:migrate":  "turbo db:migrate",
+                    "db:seed":  "turbo db:seed",
+                    "db:studio":  "cd packages/database \u0026\u0026 npx prisma studio",
+                    "docker:up":  "docker compose up -d",
+                    "docker:down":  "docker compose down",
+                    "docker:reset":  "docker compose down -v \u0026\u0026 docker compose up -d",
+                    "docker:logs":  "docker compose logs -f",
+                    "docker:build":  "docker compose build",
+                    "prepare":  "husky"
+                },
+    "devDependencies":  {
+                            "@types/node":  "^20.14.0",
+                            "eslint":  "^8.57.0",
+                            "husky":  "^9.0.11",
+                            "lint-staged":  "^15.2.7",
+                            "prettier":  "^3.3.2",
+                            "rimraf":  "^5.0.7",
+                            "turbo":  "^2.0.6",
+                            "typescript":  "^5.5.2"
+                        },
+    "lint-staged":  {
+                        "*.{ts,tsx}":  [
+                                           "eslint --fix",
+                                           "prettier --write"
+                                       ],
+                        "*.{json,md,yaml,yml}":  [
+                                                     "prettier --write"
+                                                 ]
+                    },
+    "packageManager":  "pnpm@9.4.0"
+}

@@ -1,0 +1,14 @@
+{
+  "name": "@unkora/config",
+  "version": "1.0.0",
+  "private": true,
+  "exports": {
+    "./tsconfig": "./tsconfig.base.json",
+    "./eslint": "./eslint-base.js",
+    "./tailwind": "./tailwind.config.base.ts"
+  },
+  "scripts": {
+    "lint": "echo 'No lint for config package'",
+    "clean": "echo 'Nothing to clean'"
+  }
+}

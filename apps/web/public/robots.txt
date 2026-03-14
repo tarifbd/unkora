@@ -1,0 +1,16 @@
+User-agent: *
+Allow: /
+
+# Disallow admin and API routes
+Disallow: /api/
+Disallow: /auth/
+Disallow: /checkout/
+Disallow: /account/
+
+# Allow important paths
+Allow: /products/
+Allow: /category/
+Allow: /search/
+Allow: /flash-sale/
+
+Sitemap: https://unkora.com/sitemap.xml

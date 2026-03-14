@@ -1,0 +1,104 @@
+name: CI
+
+on:
+  push:
+    branches: [main, develop]
+  pull_request:
+    branches: [main, develop]
+
+env:
+  PNPM_VERSION: 9.4.0
+  NODE_VERSION: 20
+
+jobs:
+  lint-typecheck:
+    name: Lint & Type Check
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: pnpm/action-setup@v4
+        with:
+          version: ${{ env.PNPM_VERSION }}
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: pnpm
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Lint
+        run: pnpm lint
+
+      - name: Type check
+        run: pnpm typecheck
+
+  test:
+    name: Unit Tests
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:16-alpine
+        env:
+          POSTGRES_USER: unkora
+          POSTGRES_PASSWORD: test_pass
+          POSTGRES_DB: unkora_test
+        ports: [5432:5432]
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+      redis:
+        image: redis:7-alpine
+        ports: [6379:6379]
+        options: >-
+          --health-cmd "redis-cli ping"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+        with:
+          version: ${{ env.PNPM_VERSION }}
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: pnpm
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+      - name: Generate Prisma client
+        run: pnpm --filter @unkora/database db:generate
+        env:
+          DATABASE_URL: postgresql://unkora:test_pass@localhost:5432/unkora_test
+      - name: Run unit tests
+        run: pnpm test --reporter=verbose
+        env:
+          DATABASE_URL: postgresql://unkora:test_pass@localhost:5432/unkora_test
+          REDIS_URL: redis://localhost:6379
+          NODE_ENV: test
+
+  build:
+    name: Build All Apps
+    runs-on: ubuntu-latest
+    needs: [lint-typecheck]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+        with:
+          version: ${{ env.PNPM_VERSION }}
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ env.NODE_VERSION }}
+          cache: pnpm
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+      - name: Build
+        run: pnpm build
+        env:
+          NEXT_PUBLIC_API_URL: https://api.unkora.com
+          NEXTAUTH_URL: https://unkora.com
+          NEXTAUTH_SECRET: ci-test-secret-min-32-chars-long

@@ -1,0 +1,13 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --font-dm-sans: "DM Sans", sans-serif;
+    --font-playfair: "Playfair Display", serif;
+    --font-hind: "Hind Siliguri", sans-serif;
+  }
+  body { @apply bg-cream-50 text-charcoal-900 antialiased; }
+  .font-bangla { font-family: var(--font-hind); }
+}

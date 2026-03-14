@@ -1,0 +1,29 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --font-dm-sans: 'DM Sans', system-ui, sans-serif;
+    --font-playfair: 'Playfair Display', Georgia, serif;
+    --font-hind-siliguri: 'Hind Siliguri', system-ui, sans-serif;
+  }
+  html { -webkit-font-smoothing: antialiased; scroll-behavior: smooth; }
+  body { font-family: var(--font-dm-sans); background-color: #FFFBF5; color: #1C1917; }
+  .font-bangla, :lang(bn) { font-family: var(--font-hind-siliguri); }
+  h1,h2,h3,h4,h5,h6,.font-serif { font-family: var(--font-playfair); }
+  ::-webkit-scrollbar { width: 5px; height: 5px; }
+  ::-webkit-scrollbar-thumb { background: #b45309; border-radius: 3px; }
+  input[type=number]::-webkit-inner-spin-button,
+  input[type=number]::-webkit-outer-spin-button { -webkit-appearance: none; }
+}
+
+@layer components {
+  .input-base { @apply w-full px-3 py-2.5 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-primary-300 transition-colors placeholder:text-gray-400; }
+  .skeleton { @apply animate-pulse bg-gray-100 rounded-lg; }
+}
+
+@layer utilities {
+  .gradient-text { @apply bg-gradient-to-r from-primary-700 to-amber-500 bg-clip-text text-transparent; }
+  .glass { @apply bg-white/80 backdrop-blur-sm; }
+}
