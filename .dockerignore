@@ -1,0 +1,16 @@
+node_modules
+.turbo
+.git
+.github
+.env
+.env.*
+!.env.example
+coverage
+playwright-report
+test-results
+dist
+build
+.next
+*.log
+*.pem
+{apps
